@@ -2,7 +2,7 @@
 numpy==1.19.4
 scipy==1.5.4
 h5py==2.10.0
-matplotlib==3.3.3
+matplotlib==3.10.8
 emcee==3.1.0
 corner==2.2.1
 jupyter
