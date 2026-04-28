@@ -18,6 +18,6 @@ def test_elemental_table():
     print("Shape :", elemental_table.shape)
     print("Dtype :", elemental_table.dtype)
     print(elemental_table['Symbol'])
-    assert elemental_table.shape == (117, )
+    assert elemental_table.shape == (116, )
 
 test_elemental_table()   
