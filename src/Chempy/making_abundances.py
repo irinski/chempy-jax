@@ -1,6 +1,7 @@
 import numpy as np
-
-
+import jax
+import jax.numpy as jnp
+jax.config.update("jax_enable_x64", True)
 
 def mass_fraction_to_abundances(cube, solar_abundances):
 	'''
@@ -79,16 +80,16 @@ def abundance_to_mass_fraction(all_elements,all_masses,all_abundances,abundances
 	
 	   the fractions as an array
 	'''
-	fractions = []
-	for i,item in enumerate(symbols):
-		fractions.append(abundances[i])
-		fractions[i] -= 12
-		fractions[i] = np.power(10,fractions[i])
-		fractions[i] *= all_masses[np.where(all_elements == item)]
-	tmp = sum(fractions)
-	for i,item in enumerate(symbols):
-		fractions[i] /= tmp
-	return np.hstack(fractions)
+
+	lookup = {s: i for i, s in enumerate(all_elements)}
+	indexes = np.array([lookup[s] for s in symbols])
+
+	masses = all_masses[indexes]
+
+	fractions = jnp.power(10, abundances - 12) * masses
+	sum_fractions = jnp.sum(fractions)
+	fractions /= sum_fractions
+	return fractions
 
 def abundance_to_mass_fraction_normed_to_solar(all_elements,all_masses,all_abundances,abundances,symbols):
 	'''

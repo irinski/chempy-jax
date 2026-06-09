@@ -5,7 +5,7 @@ import os
 import numpy as np
 import jax
 import jax.numpy as jnp
-# jax.config.update("jax_enable_x64", True)
+jax.config.update("jax_enable_x64", True)
  
 # Load Chempy library from path in environment variable CHEMPY_PATH
 chempy_path = os.environ.get('CHEMPY_PATH')
@@ -14,7 +14,6 @@ if chempy_path and chempy_path not in sys.path:
  
 from Chempy.parameter import ModelParameters
 from Chempy.solar_abundance import solar_abundances
-
 
 def test_solar_abundances_jax():  
     a = ModelParameters()
@@ -58,4 +57,5 @@ def test_solar_abundances_jax():
         solar_table_matrix_jax.dtype,
     )
 
-test_solar_abundances_jax()   
+if __name__ == "__main__":
+    test_solar_abundances_jax()

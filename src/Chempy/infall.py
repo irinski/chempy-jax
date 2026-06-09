@@ -1,6 +1,10 @@
 import numpy as np
 from .making_abundances import abundance_to_mass_fraction_normed_to_solar,abundance_to_mass_fraction
 
+import jax
+import jax.numpy as jnp
+jax.config.update("jax_enable_x64", True)
+
 class PRIMORDIAL_INFALL(object):
 	def __init__(self,elements,solar_table):
 		'''
@@ -12,27 +16,18 @@ class PRIMORDIAL_INFALL(object):
 
 
 		'''
-		self.elements = np.hstack(elements)
-		element_names = list(solar_table['Symbol'])
-		element_number = []
-		element_masses = []
-		element_abundances = []
-		for item in element_names:
-			element_number.append(int(solar_table['Number'][np.where(solar_table['Symbol']==item)]))
-			element_masses.append(solar_table['Mass'][np.where(solar_table['Symbol']==item)])
-			element_abundances.append(solar_table['photospheric'][np.where(solar_table['Symbol']==item)])
+		self.elements = np.array(elements)
 
-		sorted_index = np.argsort(np.array(element_number))
-		element_number = [element_number[i] for i in sorted_index]
-		element_masses = [element_masses[i] for i in sorted_index]
-		element_names = [element_names[i] for i in sorted_index]
-		element_abundances = [element_abundances[i] for i in sorted_index]
-		self.all_elements = np.hstack(element_names)
-		self.numbers = np.hstack(element_number)
-		self.masses = np.hstack(element_masses)  
-		self.all_abundances = np.hstack(element_abundances)
+		sorted_number_idx = np.argsort(solar_table['Number'])
+		print(f"\nAAAA: {sorted_number_idx}\n")
+
+		self.numbers = jnp.array(solar_table['Number'][sorted_number_idx])
+		self.masses = jnp.array(solar_table['Mass'][sorted_number_idx])
+		self.all_abundances = jnp.array(solar_table['photospheric'][sorted_number_idx])
+		self.all_elements = solar_table['Symbol'][sorted_number_idx]
+
 		self.all_fractions = abundance_to_mass_fraction(self.all_elements,self.masses,self.all_abundances,self.all_abundances,self.all_elements)
-	  
+
 
 	def primordial(self,):
 		'''
