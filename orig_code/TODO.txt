@@ -1,0 +1,5 @@
+- include Neutron Star merger process + yieldsets (similar to SN1a, yields from Andreas Bauswein, implementation Benoit Cote)
+- include sub Chanrdasekhar SNIa process + yieldsets (yields from Fritz Roepcke)
+- Chempy Likelihood by fit to an abundance track in time
+- Optimize the measure for the likelihood (i.e. X/H or X/Fe or X/Mn or X/Mg or some PCA)
+- Optimize the elements used for inference
