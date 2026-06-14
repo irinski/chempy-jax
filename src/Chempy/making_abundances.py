@@ -60,6 +60,7 @@ def mass_fraction_to_abundances(cube, solar_abundances):
 
 	return (cube_abundances,element_names,element_number)
 
+#@jax.jit
 def abundance_to_mass_fraction(all_elements,all_masses,all_abundances,abundances,symbols):
 	'''
 	Calculating mass fractions from abundances.

@@ -19,7 +19,8 @@ class PRIMORDIAL_INFALL(object):
 		self.elements = np.array(elements)
 
 		sorted_number_idx = np.argsort(solar_table['Number'])
-		print(f"\nAAAA: {sorted_number_idx}\n")
+		#print(f"\nsolar table number: {solar_table['Number']}")
+		#print(f"\nAAAA: {sorted_number_idx}\n")
 
 		self.numbers = jnp.array(solar_table['Number'][sorted_number_idx])
 		self.masses = jnp.array(solar_table['Mass'][sorted_number_idx])
